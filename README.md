@@ -3,6 +3,14 @@
 
 ---
 
+## Video de demostración
+
+[![Ver en YouTube](https://img.shields.io/badge/YouTube-Ver%20Video-red?logo=youtube)](https://youtu.be/4rDdH7w28Qo)
+
+**Enlace directo:** https://youtu.be/4rDdH7w28Qo
+
+---
+
 ## 1. Objetivo
 Configurar una VPN Hub and Spoke punto a multipunto DMVPN Fase 2 con IKEv1 y OSPF. En la Fase 2, los Spokes pueden comunicarse directamente entre sí sin pasar por el Hub mediante NHRP (Next Hop Resolution Protocol).
 
@@ -10,17 +18,9 @@ Configurar una VPN Hub and Spoke punto a multipunto DMVPN Fase 2 con IKEv1 y OSP
 
 ## 2. Topología
 
-```
-              [HUB] (LAN: 192.168.7.0/24)
-             /     \
-          [ISP]
-         /     \
-[SPOKE1]       [SPOKE2]
-(LAN:          (LAN:
-192.168.80.0)  192.168.78.0)
-```
 
-> 📸 **SCREENSHOT:** Insertar captura de la topología DMVPN completa en EVE-NG
+> <img width="1323" height="1021" alt="image" src="https://github.com/user-attachments/assets/e1778720-1ac8-4e79-bd00-f18bf1033f4e" />
+
 
 ---
 
@@ -63,8 +63,6 @@ Configurar una VPN Hub and Spoke punto a multipunto DMVPN Fase 2 con IKEv1 y OSP
 
 ### 5.1 Configuración HUB
 
-> 📸 **SCREENSHOT:** Insertar captura del `show running-config` del HUB mostrando Tunnel0 con `tunnel mode gre multipoint`, `ip nhrp map multicast dynamic` y OSPF
-
 ```
 interface Tunnel0
  ip address 172.16.78.1 255.255.255.0
@@ -84,7 +82,6 @@ router ospf 1
 
 ### 5.2 Configuración SPOKE1
 
-> 📸 **SCREENSHOT:** Insertar captura del `show running-config` del SPOKE1 mostrando `ip nhrp nhs` y OSPF
 
 ```
 interface Tunnel0
@@ -110,7 +107,8 @@ Ejecutar en HUB:
 ```
 show dmvpn
 ```
-> 📸 **SCREENSHOT:** Insertar captura mostrando ambos Spokes registrados con estado **UP** y tipo **Hub**
+> <img width="1010" height="343" alt="image" src="https://github.com/user-attachments/assets/ea8a9644-aacd-4bde-9b1e-7936a5d167f1" />
+
 
 ### 6.2 Estado OSPF en HUB
 
@@ -118,7 +116,8 @@ Ejecutar en HUB:
 ```
 show ip ospf neighbor
 ```
-> 📸 **SCREENSHOT:** Insertar captura mostrando ambos Spokes en estado **FULL**
+> <img width="925" height="271" alt="image" src="https://github.com/user-attachments/assets/29d01e86-3f16-4b57-b99a-be0b26a2dd17" />
+
 
 ### 6.3 Estado ISAKMP SA
 
@@ -126,7 +125,8 @@ Ejecutar en HUB:
 ```
 show crypto isakmp sa
 ```
-> 📸 **SCREENSHOT:** Insertar captura mostrando sesiones IKEv1 **QM_IDLE ACTIVE** para cada Spoke
+> <img width="940" height="195" alt="image" src="https://github.com/user-attachments/assets/2cf19a30-abba-4a37-9265-f98a32a734b8" />
+
 
 ### 6.4 Tabla de rutas
 
@@ -134,7 +134,8 @@ Ejecutar en HUB:
 ```
 show ip route
 ```
-> 📸 **SCREENSHOT:** Insertar captura mostrando rutas **O (OSPF)** hacia las LANs de los Spokes
+> <img width="940" height="526" alt="image" src="https://github.com/user-attachments/assets/63fc8776-9c43-496f-b30f-969e138d8b59" />
+
 
 ### 6.5 Demostración de conectividad
 
@@ -143,25 +144,7 @@ Ejecutar en Linux-SP1:
 ping -c 4 192.168.7.2
 ping -c 4 192.168.78.2
 ```
-> 📸 **SCREENSHOT:** Insertar captura del ping exitoso hacia LAN del HUB y LAN de SPOKE2
+> <img width="940" height="269" alt="image" src="https://github.com/user-attachments/assets/8c24c7fe-832d-4574-84f8-a1667189e462" />
+
 
 ---
-
-## 7. Archivos del repositorio
-
-| Archivo | Descripción |
-|---|---|
-| `YeuryLopez_20250780_Script_P7.txt` | Script de configuración |
-| `YeuryLopez_20250780_Informe_P7.pdf` | Documentación técnica en PDF |
-| `YeuryLopez_20250780_Links_P7.txt` | Enlace al video |
-| `README.md` | Este archivo |
-
----
-
-## Video de demostración — DMVPN Fase 2 IKEv1 con OSPF
-
-[![Ver en YouTube](https://img.shields.io/badge/YouTube-Ver%20Video-red?logo=youtube)](https://youtu.be/4rDdH7w28Qo)
-
-**Enlace directo:** https://youtu.be/4rDdH7w28Qo
-
-**Playlist completa:** https://www.youtube.com/playlist?list=PLMmRZwuxbsUo
